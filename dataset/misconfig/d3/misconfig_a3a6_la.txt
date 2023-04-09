@@ -1,0 +1,12 @@
+2019-06-22 00:57:55.300752 Measurement report 15 a6 422 -112 191 -123 , Scell: 491 -128 
+
+2019-06-22 00:57:58.668295 Measurement report 6 a6 422 -117 402 -124 , Scell: 469 -130 
+
+2019-06-22 01:02:13.897766 Measurement report 6 a6 422 -112 77 -117 , Scell: 493 -121 
+
+2019-06-17 16:31:11.257890 Measurement report 7 a6 243 -104 243 -113 , Scell: 139 -110 
+
+2019-06-17 16:48:23.850763 Measurement report 11 a6 130 -76 8 -82 , Scell: 116 -91 
+
+2019-06-17 16:48:25.826983 Measurement report 21 a6 130 -79 114 -93 8 -96 , Scell: 116 -93 , Scell: 116 -99 
+

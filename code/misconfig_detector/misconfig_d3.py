@@ -1,88 +1,62 @@
-import pandas as pd
-import numpy as np
-import collections
-import os
+# check whether A6 is reported from a weaker cell to a better cell
+
 import sys
-import math
-import datetime
-from collections import OrderedDict
 
-input_file = sys.argv[1]
-output_path = sys.argv[2]
+neigh_rsrp = 0
+scell1_rsrp = 0
+scell2_rsrp = 0
+a6 = False
+GPS = None
+check_add = False
+for line in open(sys.argv[1]).readlines():
+	if ' a6 ' in line:
+		# 2020-10-21 22:51:03.015009 Measurement report 17 a6 325 -94 -13.5 325 -109 -15.5 , Scell: 52 -115 -20.0 
+		blocks = line.split()
+		#if len(blocks) < 11:
+		#print(line)
+		# print line
+		try:
+			neigh_rsrp = int(blocks[9][1:])
+		except:
+			continue
+		if blocks.count('Scell:') > 1:
+			scell2_rsrp = int(blocks[-1][1:])
+			scell1_rsrp = int(blocks[-5][1:])
+		else:
+			scell1_rsrp = int(blocks[-1][1:])
+			scell2_rsrp = 0
+		a6 = True
+		a6_line = line
+		
+	elif 'Remove' in line:
+		if not a6:
+			continue
+		a6 = False
+		# print line.split()[1]
+		if line.split()[1] == '1':
+			# print a6_line, scell1_rsrp, neigh_rsrp
+			if scell1_rsrp <= neigh_rsrp: # or scell1_rsrq < neigh_rsrq:
+				#print(GPS)
+				print(a6_line)
+				#print('1', scell1_rsrp, neigh_rsrp)
+				check_add = True
+		elif line.split()[1] == '2':
+			if scell2_rsrp <= neigh_rsrp: # or scell2_rsrq < neigh_rsrq:
+				#print(GPS)
+				print(a6_line)
+				#print('2', scell2_rsrp, neigh_rsrp)
+				check_add = True
+	elif 'Add' in line:
+		if not check_add:
+			continue
+		#print('added', a6_line)
+		# print a6_line
+		check_add = False
+	elif 'Location' in line:
+		GPS = line
+	elif '2020' in line:
+		if not a6:
+			check_add = False
 
-def check_a3a6_misconfig(meas):
-    loop_list = {}
-    for freq, v in meas.items():
-        if 'a3' in v and 'a6' in v:
-            thres_list_a3 = v['a3']
-            thres_list_a6 = v['a6']
-            
-            for thres_a3 in thres_list_a3:
-                for thres_a6 in thres_list_a6:
-                    threshold_a3 = float(thres_a3.strip('_Non'))
-                    threshold_a6 = float(thres_a6.strip('_Non'))
-                    
-                    if threshold_a3 == threshold_a6:
-                        if freq not in loop_list:
-                            loop_list[freq] = {}
-                        threshold_str = str(threshold_a3) + '|' + str(threshold_a6)
-                        if threshold_str not in loop_list[freq]:
-                            loop_list[freq][threshold_str] = [threshold_a3, threshold_a6, 0]
-                        loop_list[freq][threshold_str][2] += 1
-    
-    return loop_list
 
-a3a6_misconfig_dict = {}
-pcell_str = ""
-meas = {}
 
-total_csm_num = 0
-
-with open(input_file, 'r', encoding='utf-8-sig') as lines:
-    for line in lines:
-        
-        if "Frequency" in line:
-            items = line.strip().split(' ')
-            pcell_str = items[1]
-            meas = {}
-            config_list = []
-        
-        if "Measurement state count" in line:
-            #print(added_meas)
-            #print(removed_meas)
-            a3a6_misconfig_list = check_a3a6_misconfig(meas)
-            
-            if len(a3a6_misconfig_list) > 0:
-                print(a3a6_misconfig_list)
-                a3a6_misconfig_dict[pcell_str] = a3a6_misconfig_list
-            
-            total_csm_num += 1
-            
-            meas = {}
-            a3a6_misconfig_list = {}
-            
-        if "_S" in line:
-            items = line.strip().split(': ')
-            freq = items[0]
-            event = items[1].strip(', thr/ofst')
-            thres = items[2].strip(', hetersis')
-            
-            if freq not in meas:
-                meas[freq] = {}
-            if event not in meas[freq]:
-                meas[freq][event] = []
-            meas[freq][event].append(thres)
-                
-#print(a1a2_loop_dict)
-print(total_csm_num)
-                
-p = output_path + "/" + "misconfig_a3a6.csv"
-fout = open(p, 'w')
-fout.write('pcell,freq,thres_a1,thres_a2,count\n')
-for k1, v1 in a3a6_misconfig_dict.items():
-    for k2, v2 in v1.items():
-        for k3, v3 in v2.items():
-            line = str(k1) + ',' + str(k2) + ',' + str(v3[0]) + ',' + str(v3[1]) + ',' + str(v3[2])
-            fout.write(line + '\n')
-fout.close()
-    
