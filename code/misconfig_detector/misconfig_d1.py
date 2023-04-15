@@ -70,6 +70,8 @@ added_meas = {}
 removed_meas = {}
 
 total_dsm_num = 0
+total_pcell_num = 0
+total_misconfig_pcell_num = 0
 
 with open(input_file, 'r', encoding='utf-8-sig') as lines:
     for line in lines:
@@ -80,6 +82,8 @@ with open(input_file, 'r', encoding='utf-8-sig') as lines:
             added_meas = {}
             removed_meas = {}
             delta_config_list = []
+
+            total_pcell_num += 1
         
         if "Measurement delta state count" in line:
             #print(added_meas)
@@ -133,7 +137,7 @@ with open(input_file, 'r', encoding='utf-8-sig') as lines:
                 removed_meas[freq][event].append(thres)
                 
 #print(a1a2_loop_dict)
-#print(total_dsm_num)
+print(total_pcell_num)
                 
 p = output_path + "/" + "misconfig_a1a2.csv"
 fout = open(p, 'w')
