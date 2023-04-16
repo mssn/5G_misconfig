@@ -1,0 +1,14 @@
+dataset,operator,d1_a1a2,d1_b1a2,d2_missed_4g,d2_missed_5g,d3,d4,d5
+indy,att,20,192,0,37,0,0,0
+indy,verizon,5,0,0,0,0,0,0
+indy,tmobile,0,0,0,12,0,0,0
+chicago,att,18,144,0,14,0,0,0
+chicago,verizon,1,0,0,0,0,0,0
+chicago,tmobile,0,0,0,4,0,0,0
+la,att,30,0,12,5,0,1,0
+la,verizon,0,0,0,0,0,4,0
+la,tmobile,64,0,0,0,2,14,0
+wl,att,0,0,21,0,0,10,0
+wl,verizon,0,0,0,0,0,0,0
+wl,tmobile,1,0,3,0,0,0,0
+cn,china mobile,0,0,1,0,0,7,1

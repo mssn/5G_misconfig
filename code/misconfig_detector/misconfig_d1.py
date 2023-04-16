@@ -73,8 +73,21 @@ total_dsm_num = 0
 total_pcell_num = 0
 total_misconfig_pcell_num = 0
 
+op = None
+
 with open(input_file, 'r', encoding='utf-8-sig') as lines:
     for line in lines:
+
+        if "Carrier" in line:
+            items = line.strip().split(' ')
+            if len(items) >= 2:
+                op = items[1]
+            else:
+                op = None
+            if op not in a1a2_loop_dict:
+                a1a2_loop_dict[op] = {}
+            if op not in b1a2_loop_dict:
+                b1a2_loop_dict[op] = {}
         
         if "Frequency" in line:
             items = line.strip().split(' ')
@@ -94,12 +107,12 @@ with open(input_file, 'r', encoding='utf-8-sig') as lines:
             if len(a1a2_loop_list) > 0:
                 #print(line)
                 print(a1a2_loop_list)
-                a1a2_loop_dict[pcell_str] = a1a2_loop_list
+                a1a2_loop_dict[op][pcell_str] = a1a2_loop_list
             
             if len(b1a2_loop_list) > 0:
                 #print(pcell_str)
                 print(b1a2_loop_list)
-                b1a2_loop_dict[pcell_str] = b1a2_loop_list
+                b1a2_loop_dict[op][pcell_str] = b1a2_loop_list
             
             total_dsm_num += 1
             
@@ -137,25 +150,27 @@ with open(input_file, 'r', encoding='utf-8-sig') as lines:
                 removed_meas[freq][event].append(thres)
                 
 #print(a1a2_loop_dict)
-print(total_pcell_num)
+#print(total_pcell_num)
                 
 p = output_path + "/" + "misconfig_a1a2.csv"
 fout = open(p, 'w')
-fout.write('pcell,freq,thres_a1,thres_a2,count\n')
+fout.write('operator,pcell,freq,thres_a1,thres_a2,count\n')
 for k1, v1 in a1a2_loop_dict.items():
     for k2, v2 in v1.items():
         for k3, v3 in v2.items():
-            line = str(k1) + ',' + str(k2) + ',' + str(v3[0]) + ',' + str(v3[1]) + ',' + str(v3[2])
-            fout.write(line + '\n')
+            for k4, v4 in v3.items():
+                line = str(k1) + ',' + str(k2) + ',' + str(k3) + ',' + str(v4[0]) + ',' + str(v4[1]) + ',' + str(v4[2])
+                fout.write(line + '\n')
 fout.close()
 
 p = output_path + "/" + "misconfig_b1a2.csv"
 fout = open(p, 'w')
-fout.write('pcell,freq,thres_b1,thres_a2,count\n')
+fout.write('operator,pcell,freq,thres_b1,thres_a2,count\n')
 for k1, v1 in b1a2_loop_dict.items():
     for k2, v2 in v1.items():
         for k3, v3 in v2.items():
-            line = str(k1) + ',' + str(k2) + ',' + str(v3[0]) + ',' + str(v3[1]) + ',' + str(v3[2])
-            fout.write(line + '\n')
+            for k4, v4 in v3.items():
+                line = str(k1) + ',' + str(k2) + ',' + str(k3) + ',' + str(v4[0]) + ',' + str(v4[1]) + ',' + str(v4[2])
+                fout.write(line + '\n')
 fout.close()
     
