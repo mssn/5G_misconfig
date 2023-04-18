@@ -1,8 +1,8 @@
-###############################################################################
+################################################
 #   Datasets and source codes for CoNEXT'23 
 #   (Dependent Misconfiguration in 5G/4.5G Radio Resource Control)
 #
-###############################################################################
+################################################
 
 This README is used to introduce our released datasets and source codes by our CoNEXT'23 work: 
 “Dependent Misconfiguration in 5G/4.5G Radio Resource Control”.
