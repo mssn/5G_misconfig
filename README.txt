@@ -6,9 +6,9 @@
 This README is used to introduce our released datasets and source codes by our CoNEXT'23 work: 
 “Dependent Misconfigurations in 5G/4.5G Radio Resource Control”.
 
-We have conducted a reality check on dependent misconfiguration with 4.5G/5G datasets from three US operators and one China operator. We use one 5G phone model (Google Pixel 5) to collect two US datasets in the metropolitan areas A and B over three top-tier carriers. We also use a public dataset with 4G traces collected from one operator in China.
+We have conducted a reality check on dependent misconfiguration with 4.5G/5G datasets from three US operators and one China operator. We use one 5G phone model (Google Pixel 5) to collect US datasets in Los Angles, Chicago, Indianapolis and West Lafayette over three top-tier carriers. We also use a public dataset with 4G traces collected from one operator in China.
 
-This reality check has covered 48,247 cells (4G: 44,694 and 5G: 3,553). In this study, all three US operators run 5G in a non-standard-alone (NSA) mode. We have collected data speed results through file downloading experiments in the US.
+This reality check has covered 26,618 serving cells (4G: 25,005 and 5G: 1,613). In this study, all three US operators run 5G in a non-standard-alone (NSA) mode. We have collected data speed results through file downloading experiments in the US.
 
 1) Structure of files
 
