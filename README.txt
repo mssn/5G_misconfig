@@ -1,17 +1,20 @@
 ###############################################################################
-#   Datasets and source codes for CoNEXT'23 (Dependent Misconfigurations in 5G/4.5G Radio Resource Control)
+#   Datasets and source codes for CoNEXT'23 
+#   (Dependent Misconfiguration in 5G/4.5G Radio Resource Control)
 #
 ###############################################################################
 
 This README is used to introduce our released datasets and source codes by our CoNEXT'23 work: 
-“Dependent Misconfigurations in 5G/4.5G Radio Resource Control”.
+“Dependent Misconfiguration in 5G/4.5G Radio Resource Control”.
 
-We have conducted a reality check on dependent misconfiguration with 4.5G/5G datasets from three US operators and one China operator. We use one 5G phone model (Google Pixel 5) to collect US datasets in Los Angles, Chicago, Indianapolis and West Lafayette over three top-tier carriers. We also use a public dataset with 4G traces collected from one operator in China.
+We have conducted a reality check on dependent misconfiguration with 4.5G/5G datasets from three US operators and one China operator. We use one 5G phone model (Google Pixel 5) to collect US datasets in Los Angles, Chicago, Indianapolis and West Lafayette with three top-tier carriers in the US (AT&T, Verizon and T-Mobile). We also use a dataset with 4G traces collected from one operator in China.
 
-This reality check has covered 26,618 serving cells (4G: 25,005 and 5G: 1,613). In this study, all three US operators run 5G in a non-standard-alone (NSA) mode. We have collected data speed results through file downloading experiments in the US.
+This reality check has covered 26,618 serving cells (4G: 25,005 and 5G: 1,613) out of 48,249 cells (4G: 44,696 and 5G: 3,553). In this study, all three US operators run 5G in a non-standard-alone (NSA) mode. We have collected data speed results through file downloading experiments in the US.
 
 1) Structure of files
 
+├── dataset_stat.csv
+├── misconfig_stat.csv 
 ├── code
 │   └── misconfig_detector
 │       ├── misconfig_d1.py
