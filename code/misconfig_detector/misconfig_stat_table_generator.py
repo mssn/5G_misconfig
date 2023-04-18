@@ -10,7 +10,8 @@ dist = {}
 def parse_dataset_stat(folder):
     global dist
     dataset_list = ['indy', 'chicago', 'la', 'wl', 'cn']
-    instance_list = ['d1/a1a2', 'd1/b1a2', 'd2/missed_4g', 'd2/missed_5g', 'd3', 'd4', 'd5']
+    instance_list = ['a1a2', 'b1a2', 'missed_4g', 'missed_5g', 'd3', 'd4', 'd5']
+    op_list_all = ['att', 'verizon', 'tmobile', 'china_mobile']
 
     dist = {}
     dist2 = {}
@@ -22,7 +23,7 @@ def parse_dataset_stat(folder):
 
         op_list = []
         if dataset == 'cn':
-            op_list = ['china mobile']
+            op_list = ['china_mobile']
         else:
             op_list = ['att', 'verizon', 'tmobile']
 
@@ -45,6 +46,7 @@ def parse_dataset_stat(folder):
             dataset = ''
             case = ''
             case_index = 0
+            car = ''
             for k in dataset_list:
                 if file_path.find(k) >= 0:
                     dataset = k
@@ -52,13 +54,13 @@ def parse_dataset_stat(folder):
                 if file_path.find(k) >= 0:
                     case = k
 
-                    if case == 'd1/a1a2':
+                    if case == 'a1a2':
                         case_index = 0
-                    elif case == 'd1/b1a2':
+                    elif case == 'b1a2':
                         case_index = 1
-                    elif case == 'd2/missed_4g':
+                    elif case == 'missed_4g':
                         case_index = 2
-                    elif case == 'd2/missed_5g':
+                    elif case == 'missed_5g':
                         case_index = 3
                     elif case == 'd3':
                         case_index = 4
@@ -67,28 +69,21 @@ def parse_dataset_stat(folder):
                     elif case == 'd5':
                         case_index = 6
 
+            for k in op_list_all:
+                if file_path.find(k) >= 0:
+                    car = k
+
             with open(file_path, 'r') as lines:
                 for line in lines:
-                    if 'operator' in line:
+                    if 'count' in line or 'pcell' in line:
                         continue
-                    items = line.strip().split(',')
-                    car = ''
-                    if items[0] == '310410' or items[0] == 'att' or items[0] == 'ATT':
-                        car = 'att'
-                    elif items[0] == '311480' or items[0] == 'verizon' or items[0] == 'Verizon':
-                        car = 'verizon'
-                    elif items[0] == '310260' or items[0] == 'tmobile' or items[0] == 'T-Mobile':
-                        car = 'tmobile'
-                    elif items[0] == '46000' or items[0] == '46001' or items[0] == 'china mobile':
-                        car = 'china mobile'
-                    else:
-                        continue
+                    items = line.strip().strip(',').split(',')
                     
                     pcell = ''
                     if case == 'd4' or case == 'd5':
-                        pcell = items[1] + '-' + items[2]
+                        pcell = items[0] + '-' + items[1]
                     else:
-                        pcell = items[1]
+                        pcell = items[0]
 
                     print(case)
                     print(line)

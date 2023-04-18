@@ -7,8 +7,8 @@ chicago,verizon,1,0,0,0,0,0,0
 chicago,tmobile,0,0,0,4,0,0,0
 la,att,30,0,12,5,0,1,0
 la,verizon,0,0,0,0,0,4,0
-la,tmobile,64,0,0,0,2,14,0
+la,tmobile,70,0,0,0,4,22,0
 wl,att,0,0,21,0,0,10,0
 wl,verizon,0,0,0,0,0,0,0
-wl,tmobile,1,0,3,0,0,0,0
-cn,china mobile,0,0,1,0,0,7,1
+wl,tmobile,6,0,3,0,0,0,0
+cn,china_mobile,0,0,1,0,0,7,1
